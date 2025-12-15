@@ -1,0 +1,189 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.getElementById('mainNavbar');
+    const services = document.querySelectorAll('.service-item');
+    const heroVideo = document.getElementById('heroVideo');
+    const heroBackupImage = document.getElementById('heroBackupImage');
+    
+    // 1. NAVBAR: Sólido al inicio → Transparente al hacer scroll
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            // Cuando se hace scroll (más de 50px), navbar se vuelve transparente
+            navbar.classList.add('scrolled');
+        } else {
+            // En la parte superior, navbar sólido
+            navbar.classList.remove('scrolled');
+        }
+        
+        // Animación de elementos al hacer scroll
+        animateOnScroll();
+    });
+    
+    // 2. Animación de las Tarjetas de Servicio al cargarse la página
+    services.forEach((item, index) => {
+        // Al cargar la página, agregamos la clase de animate.css con delay
+        const delay = item.getAttribute('data-delay') || 0;
+        
+        setTimeout(() => {
+            item.classList.add('animate__fadeInUp'); 
+        }, delay);
+    });
+    
+    // 3. Control del video del hero y respaldo con imagen
+    if (heroVideo) {
+        // Intentar reproducir el video
+        const playPromise = heroVideo.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                // Video cargado y reproducido exitosamente
+                console.log("Video del hero cargado correctamente");
+            }).catch(error => {
+                console.log("Video no pudo cargarse, mostrando imagen de respaldo:", error);
+                // Si el video falla, mostrar la imagen de respaldo
+                showBackupImage();
+            });
+        }
+        
+        // También detectar si el video tiene errores de carga
+        heroVideo.addEventListener('error', function() {
+            console.log("Error en la carga del video");
+            showBackupImage();
+        });
+        
+        // Detectar si el video se queda cargando demasiado tiempo
+        setTimeout(() => {
+            if (heroVideo.readyState < 3) { // HAVE_FUTURE_DATA o más
+                console.log("Video tardando demasiado en cargar");
+                showBackupImage();
+            }
+        }, 3000);
+    }
+    
+    // Función para mostrar la imagen de respaldo
+    function showBackupImage() {
+        if (heroBackupImage) {
+            heroBackupImage.style.display = 'block';
+            // También podemos ocultar el video si está presente pero falló
+            if (heroVideo) {
+                heroVideo.style.display = 'none';
+            }
+        }
+    }
+    
+    // 4. Animación de elementos al hacer scroll
+    function animateOnScroll() {
+        const elements = document.querySelectorAll('.service-item, .section-title');
+        
+        elements.forEach(element => {
+            const elementPosition = element.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.2;
+            
+            if (elementPosition < screenPosition) {
+                if (!element.classList.contains('animated')) {
+                    element.classList.add('animated');
+                    
+                    if (element.classList.contains('service-item')) {
+                        element.classList.add('animate__fadeInUp');
+                    } else if (element.classList.contains('section-title')) {
+                        element.classList.add('animate__fadeInDown');
+                    }
+                }
+            }
+        });
+    }
+    
+    // 5. Smooth scroll para enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            
+            if (targetId === '#') return;
+            
+            e.preventDefault();
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                // Ajuste especial para el hero (tiene margen negativo)
+                let offset = 80;
+                if (targetId === '#hero') {
+                    offset = 0;
+                }
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - offset,
+                    behavior: 'smooth'
+                });
+                
+                // Cerrar menú móvil si está abierto
+                const navbarToggler = document.querySelector('.navbar-toggler');
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                
+                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                    navbarToggler.click();
+                }
+            }
+        });
+    });
+    
+    // 6. Efecto hover en tarjetas de servicios
+    document.querySelectorAll('.custom-hover-effect').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+    
+    // 7. Actualizar año actual en el footer
+    const currentYear = new Date().getFullYear();
+    const yearElement = document.querySelector('footer p:first-of-type');
+    
+    if (yearElement) {
+        yearElement.innerHTML = yearElement.innerHTML.replace('2025', currentYear);
+    }
+    
+    // 8. Inicializar el carrusel de Bootstrap
+    const myCarousel = document.getElementById('proyectosCarousel');
+    if (myCarousel) {
+        // Configurar intervalo para que cambie cada 5 segundos
+        const carousel = new bootstrap.Carousel(myCarousel, {
+            interval: 5000,
+            wrap: true
+        });
+        
+        // Pausar el carrusel cuando el usuario interactúa con él
+        myCarousel.addEventListener('mouseenter', () => {
+            carousel.pause();
+        });
+        
+        myCarousel.addEventListener('mouseleave', () => {
+            carousel.cycle();
+        });
+    }
+    
+    // 9. Manejar el botón de WhatsApp flotante
+    const whatsappFloat = document.querySelector('.whatsapp-float');
+    if (whatsappFloat) {
+        // Agregar animación de pulso cada 10 segundos
+        setInterval(() => {
+            whatsappFloat.classList.add('animate__animated', 'animate__pulse');
+            setTimeout(() => {
+                whatsappFloat.classList.remove('animate__animated', 'animate__pulse');
+            }, 1000);
+        }, 10000);
+    }
+    
+    // 10. Inicializar animaciones al cargar
+    setTimeout(() => {
+        animateOnScroll();
+    }, 500);
+    
+    // 11. Asegurar que el navbar sea sólido al recargar en cualquier posición
+    if (window.scrollY <= 50) {
+        navbar.classList.remove('scrolled');
+    } else {
+        navbar.classList.add('scrolled');
+    }
+});

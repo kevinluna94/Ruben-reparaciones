@@ -1,0 +1,604 @@
+/* Importar animaciones para usar con la clase animate__animated */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+/* Estilos Generales */
+:root {
+    --color-primary: #dc3545;
+    --color-secondary: #000000;
+    --color-light: #f8f9fa;
+    --color-dark: #343a40;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 0; /* ELIMINADO: espacio entre navbar y hero */
+    scroll-behavior: smooth;
+}
+
+/* Header/Navbar */
+#mainNavbar {
+    background-color: rgba(0, 0, 0, 0.95); /* SÓLIDO al inicio */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s ease;
+    padding: 15px 0;
+}
+
+/* Navbar TRANSPARENTE al hacer scroll */
+#mainNavbar.scrolled {
+    background-color: rgba(0, 0, 0, 0.7); /* Más transparente al scrollear */
+    backdrop-filter: blur(5px);
+}
+
+/* Icono hamburguesa visible - color blanco */
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.95%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+#mainNavbar .nav-link {
+    color: white !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+#mainNavbar .nav-link:hover {
+    color: var(--color-primary) !important;
+}
+
+#mainNavbar .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: var(--color-primary);
+    left: 0;
+    bottom: 0;
+    transition: width 0.3s ease;
+}
+
+#mainNavbar .nav-link:hover::after {
+    width: 100%;
+}
+
+/* Estilo para iconos de redes en el Navbar */
+.custom-social-icon {
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.custom-social-icon:hover {
+    color: var(--color-primary) !important;
+    transform: translateY(-3px);
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* Sección Hero con Video de Stock e Imagen de Respaldo */
+#hero {
+    height: 100vh;
+    min-height: 700px;
+    position: relative;
+    padding-top: 0;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    margin-top: -76px; /* COMPENSA altura del navbar */
+}
+
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    /* Imagen de respaldo por si el video no carga */
+    background-image: url('https://i.pinimg.com/736x/41/12/99/4112994d095e90ac7c84baf53aab45ad.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#heroVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7);
+    /* El video se mostrará encima de la imagen de fondo */
+    position: relative;
+    z-index: 2;
+}
+
+.backup-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://i.pinimg.com/736x/41/12/99/4112994d095e90ac7c84baf53aab45ad.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    /* Oculto por defecto, se mostrará solo si el video falla */
+    display: none;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.7));
+    z-index: 3;
+}
+
+#hero > .container {
+    position: relative;
+    z-index: 4;
+    padding-top: 120px; /* Añade espacio para que el contenido no quede detrás del navbar */
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem !important;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    max-width: 800px;
+    margin: 0 auto 2.5rem;
+}
+
+.text-shadow {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 4;
+}
+
+.scroll-indicator a {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.scroll-indicator a:hover {
+    transform: translateY(5px);
+}
+
+/* Estilos para el Carrusel de Galería */
+#galeria {
+    background-color: #f8f9fa;
+}
+
+.carousel-img {
+    height: 600px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.carousel-caption-custom {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    bottom: 40px;
+    left: 10%;
+    right: 10%;
+}
+
+.carousel-caption-custom h5 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.carousel-caption-custom p {
+    color: white;
+    font-size: 1.1rem;
+}
+
+.carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ccc;
+    border: none;
+    margin: 0 5px;
+}
+
+.carousel-indicators button.active {
+    background-color: var(--color-primary);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.carousel-control-prev {
+    left: 20px;
+}
+
+.carousel-control-next {
+    right: 20px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: rgba(220, 53, 69, 0.8);
+    opacity: 1;
+}
+
+/* Sección Sobre Mí */
+.section-title {
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: 2rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 4px;
+    background-color: var(--color-primary);
+    bottom: 0;
+    left: 0;
+    border-radius: 2px;
+}
+
+.text-center .section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#sobremi img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+}
+
+.experience-badge {
+    position: absolute;
+    bottom: -20px;
+    right: 20px;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(220, 53, 69, 0.4);
+    animation: pulse 2s infinite;
+}
+
+.badge-content {
+    text-align: center;
+    line-height: 1.2;
+}
+
+.badge-content .years {
+    font-size: 2.2rem;
+    font-weight: bold;
+    display: block;
+}
+
+.badge-content .text {
+    font-size: 0.85rem;
+    display: block;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(220, 53, 69, 0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Servicios */
+.service-icon-container {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(220, 53, 69, 0.1);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.custom-hover-effect:hover .service-icon-container {
+    background-color: rgba(220, 53, 69, 0.2);
+    transform: scale(1.1);
+}
+
+.custom-hover-effect {
+    transition: all 0.4s ease;
+    cursor: default;
+    border: 1px solid #eee;
+    overflow: hidden;
+}
+
+.custom-hover-effect:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
+    border-color: var(--color-primary) !important;
+}
+
+/* Efectos de Transición / Animación */
+.custom-btn-zoom {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.custom-btn-zoom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.4s ease;
+    z-index: -1;
+}
+
+.custom-btn-zoom:hover::before {
+    left: 100%;
+}
+
+.custom-btn-zoom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4) !important;
+}
+
+/* Sección ¿Por Qué Elegirnos? */
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+#porqueelegirnos .col-md-6:hover .feature-icon {
+    background-color: rgba(220, 53, 69, 0.3);
+    transform: rotateY(180deg);
+}
+
+/* Ubicación (Mapa Responsivo) */
+.map-responsive {
+    overflow: hidden;
+    border-radius: 12px;
+    height: 450px;
+    position: relative;
+}
+
+.map-responsive iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.contact-info i {
+    min-width: 30px;
+}
+
+/* Footer */
+.footer-link {
+    transition: all 0.3s ease;
+    padding: 3px 0;
+    display: inline-block;
+}
+
+.footer-link:hover {
+    color: var(--color-primary) !important;
+    transform: translateX(5px);
+}
+
+.custom-social-icon-footer {
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.custom-social-icon-footer:hover {
+    color: var(--color-primary) !important;
+    transform: translateY(-5px);
+}
+
+.custom-developer-link {
+    transition: color 0.3s ease;
+}
+
+.custom-developer-link:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+}
+
+/* WhatsApp Flotante */
+.whatsapp-float {
+    position: fixed;
+    width: 65px;
+    height: 65px;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 32px;
+    line-height: 65px; 
+    z-index: 1000;
+    transition: all 0.4s ease;
+    box-shadow: 0 6px 15px rgba(37, 211, 102, 0.5);
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.8);
+    background-color: #128C7E;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.3rem;
+    }
+    
+    .carousel-img {
+        height: 450px;
+    }
+    
+    .carousel-caption-custom {
+        bottom: 20px;
+        padding: 15px;
+    }
+    
+    .carousel-caption-custom h5 {
+        font-size: 1.5rem;
+    }
+    
+    .carousel-caption-custom p {
+        font-size: 1rem;
+    }
+    
+    .experience-badge {
+        width: 100px;
+        height: 100px;
+        right: 10px;
+        bottom: -15px;
+    }
+    
+    .badge-content .years {
+        font-size: 1.8rem;
+    }
+    
+    .badge-content .text {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #hero {
+        min-height: 600px;
+        margin-top: -70px;
+    }
+    
+    #hero > .container {
+        padding-top: 100px;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .carousel-img {
+        height: 350px;
+    }
+    
+    .carousel-caption-custom {
+        display: none !important;
+    }
+    
+    .experience-badge {
+        position: relative;
+        bottom: 0;
+        right: 0;
+        margin: -30px auto 0;
+        width: 100px;
+        height: 100px;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+    }
+    
+    /* Navbar móvil - fondo sólido siempre */
+    #mainNavbar {
+        background-color: rgba(0, 0, 0, 0.95) !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .carousel-img {
+        height: 250px;
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .carousel-control-prev {
+        left: 10px;
+    }
+    
+    .carousel-control-next {
+        right: 10px;
+    }
+    
+    .whatsapp-float {
+        width: 55px;
+        height: 55px;
+        font-size: 26px;
+        line-height: 55px;
+        bottom: 20px;
+        right: 20px;
+    }
+}
